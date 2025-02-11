@@ -29,7 +29,7 @@ export const folders = createTable(
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }),
-    parent: integer("parent").notNull(),
+    parent: integer("parent"),
   },
   (t) => ({
     parentIndex: index("folders_parent_idx").on(t.parent),
