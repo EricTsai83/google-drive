@@ -12,8 +12,8 @@ export default function SandboxPage() {
 
           try {
             // Clear existing data first
-            await db.delete(files);
-            await db.delete(folders);
+            // await db.delete(files);
+            // await db.delete(folders);
             // // Delete in correct order due to foreign key constrain
             // First insert all folders and get their IDs
             const folderInsert = await db
