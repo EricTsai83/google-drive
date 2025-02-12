@@ -26,7 +26,7 @@ export const folders = createTable(
   "folders",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-    name: varchar("name", { length: 256 }),
+    name: varchar("name", { length: 256 }).notNull(),
     parent: integer("parent"),
   },
   (t) => ({
