@@ -22,6 +22,8 @@ export const files_table = createTable(
   }),
 );
 
+export type DB_FileType = typeof files_table.$inferSelect;
+
 export const folders_table = createTable(
   "folders",
   {
@@ -33,3 +35,5 @@ export const folders_table = createTable(
     parentIndex: index("folders_parent_idx").on(t.parent),
   }),
 );
+
+export type DB_FolderType = typeof folders_table.$inferSelect;
