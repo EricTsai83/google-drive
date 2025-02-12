@@ -2,7 +2,6 @@ import "server-only";
 
 import { db } from "@/server/db";
 import {
-  type DB_FileType,
   files_table as fileSchema,
   folders_table as folderSchema,
 } from "@/server/db/schema";
