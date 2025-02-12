@@ -4,7 +4,7 @@
 
 - [x] Setup database and data model
 - [x] Move foldrer open state to url
-- [] Add auth
+- [x] Add auth
 - [] Add file uploading
 - [] Add analytics
 
