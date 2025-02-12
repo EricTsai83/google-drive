@@ -1,6 +1,6 @@
 import { db } from "@/server/db";
 import { mockFolders, mockFiles } from "@/lib/mock-data";
-import { files, folders } from "@/server/db/schema";
+import { files_table, folders_table } from "@/server/db/schema";
 
 export default function SandboxPage() {
   return (
@@ -17,7 +17,7 @@ export default function SandboxPage() {
             // // Delete in correct order due to foreign key constrain
             // First insert all folders and get their IDs
             const folderInsert = await db
-              .insert(folders)
+              .insert(folders_table)
               .values(
                 mockFolders.map((folder, index) => ({
                   name: folder.name,
@@ -29,7 +29,7 @@ export default function SandboxPage() {
 
             // Then insert files
             const fileInsert = await db
-              .insert(files)
+              .insert(files_table)
               .values(
                 mockFiles.map((file, index) => ({
                   name: file.name,
