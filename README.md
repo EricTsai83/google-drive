@@ -6,7 +6,7 @@
 - [x] Move foldrer open state to url
 - [x] Add auth
 - [x] Add file uploading
-- [] Add analytics
+- [ ] Add analytics
 
 ## 2-12-2025
 
