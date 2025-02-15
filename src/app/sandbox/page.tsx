@@ -1,52 +1,51 @@
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
+import { mockFolders } from "@/lib/mock-data";
 import { db } from "@/server/db";
-import { mockFolders, mockFiles } from "@/lib/mock-data";
-import { files_table, folders_table } from "@/server/db/schema";
+import { folders_table } from "@/server/db/schema";
 
-export default function SandboxPage() {
+export default async function Sandbox() {
+  const user = await auth();
+  if (!user.userId) {
+    throw new Error("User not found");
+  }
+
+  const folders = await db
+    .select()
+    .from(folders_table)
+    .where(eq(folders_table.ownerId, user.userId));
+
+  console.log(folders);
+
   return (
-    <div className="flex flex-col gap-4">
-      Seed Function
+    <div>
       <form
         action={async () => {
           "use server";
-
-          try {
-            // Clear existing data first
-            // await db.delete(files);
-            // await db.delete(folders);
-            // // Delete in correct order due to foreign key constrain
-            // First insert all folders and get their IDs
-            const folderInsert = await db
-              .insert(folders_table)
-              .values(
-                mockFolders.map((folder, index) => ({
-                  name: folder.name,
-                  parent: index !== 0 ? 1 : null,
-                })),
-              )
-              .returning(); // This will return the inserted records
-            console.log("Folder insert result:", folderInsert);
-
-            // Then insert files
-            const fileInsert = await db
-              .insert(files_table)
-              .values(
-                mockFiles.map((file, index) => ({
-                  name: file.name,
-                  size: 50000,
-                  url: file.url,
-                  parent: (index % 3) + 1,
-                })),
-              )
-              .returning(); // This will return the inserted records;
-            console.log("File insert result:", fileInsert);
-          } catch (error) {
-            console.error("Detailed error:", error);
-            throw error;
+          const user = await auth();
+          if (!user.userId) {
+            throw new Error("User not found");
           }
+
+          const rootFolder = await db
+            .insert(folders_table)
+            .values({
+              name: "root",
+              ownerId: user.userId,
+              parent: null,
+            })
+            .returning();
+
+          const insertableFolders = mockFolders.map((folder) => ({
+            name: folder.name,
+            ownerId: user.userId,
+            parent: rootFolder[0]!.id,
+          }));
+
+          await db.insert(folders_table).values(insertableFolders);
         }}
       >
-        <button type="submit">Seed</button>
+        <button type="submit">Create file</button>
       </form>
     </div>
   );
