@@ -9,7 +9,7 @@ import { index, integer, pgTableCreator, varchar } from "drizzle-orm/pg-core";
 export const createTable = pgTableCreator((name) => `google-drive_${name}`);
 
 export const files_table = createTable(
-  "files",
+  "files_table",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }).notNull(),
@@ -25,7 +25,7 @@ export const files_table = createTable(
 export type DB_FileType = typeof files_table.$inferSelect;
 
 export const folders_table = createTable(
-  "folders",
+  "folders_table",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }).notNull(),
