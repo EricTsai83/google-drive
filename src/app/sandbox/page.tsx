@@ -45,7 +45,7 @@ export default async function Sandbox() {
           await db.insert(folders_table).values(insertableFolders);
         }}
       >
-        <button type="submit">Create file</button>
+        <button type="submit">Create folder</button>
       </form>
     </div>
   );
