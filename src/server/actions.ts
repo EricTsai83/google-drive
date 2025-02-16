@@ -38,6 +38,8 @@ export async function deleteFile(fileId: number) {
 
   console.log(dbDeleteResult);
 
+  // use this method to force a refresh of the page
+  // this is the same way that revalidatePath works but without the need for a specific path
   const c = await cookies();
   c.set("force-refresh", JSON.stringify(Math.random()));
 
