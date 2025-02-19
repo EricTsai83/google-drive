@@ -9,7 +9,7 @@
 - [x] Add analytics
 - [x] Make sure sort order is consistent
 - [x] Add delete
-- [ ] Real homepage + onboarding
+- [x] Real homepage + onboarding
 
 ## Fun follow ups
 

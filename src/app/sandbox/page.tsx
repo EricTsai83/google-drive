@@ -30,7 +30,7 @@ export default async function Sandbox() {
           const rootFolder = await db
             .insert(folders_table)
             .values({
-              name: "root",
+              name: "Root",
               ownerId: user.userId,
               parent: null,
             })
