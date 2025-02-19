@@ -38,3 +38,5 @@ You get the idea. Maybe check out my last tutorial?
 ### Gray out a row while it's being deleted
 
 ### Fix file type
+
+### Implement dropzone
