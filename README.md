@@ -40,3 +40,5 @@ You get the idea. Maybe check out my last tutorial?
 ### Fix file type
 
 ### Implement dropzone
+
+### Change size to readable format

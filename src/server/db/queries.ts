@@ -61,6 +61,7 @@ export const QUERIES = {
 export const MUTATIONS = {
   createFile: async function (input: {
     file: {
+      utFileKey: string;
       name: string;
       size: number;
       url: string;

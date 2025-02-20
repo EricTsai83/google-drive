@@ -46,12 +46,14 @@ export const ourFileRouter = {
       return { userId: user.userId, parentId: input.folderId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
+      // This function if called by uploadthing server when the file is uploaded
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
       console.log("file url", file.ufsUrl);
 
       await MUTATIONS.createFile({
         file: {
+          utFileKey: file.key,
           name: file.name,
           size: file.size,
           url: file.ufsUrl,

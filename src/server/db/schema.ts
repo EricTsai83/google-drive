@@ -22,6 +22,7 @@ export const files_table = createTable(
       .primaryKey()
       .generatedByDefaultAsIdentity(),
     ownerId: varchar("owner_id", { length: 256 }).notNull(),
+    utFileKey: varchar("ut_file_key", { length: 256 }).notNull(),
     name: varchar("name", { length: 256 }).notNull(),
     size: integer("size").notNull(),
     url: varchar("url", { length: 256 }).notNull(),
