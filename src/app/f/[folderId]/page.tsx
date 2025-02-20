@@ -1,3 +1,4 @@
+import { z } from "zod";
 import DriveContents from "./drive-content";
 import { QUERIES } from "@/server/db/queries";
 
@@ -6,15 +7,20 @@ export default async function GoogleDriveClone(props: {
 }) {
   const params = await props.params;
 
-  const parseFolderId = parseInt(params.folderId);
-  if (isNaN(parseFolderId)) {
-    return <div>Invalid folder ID</div>;
-  }
+  const { data, success } = z
+    .object({
+      folderId: z.coerce.number(),
+    })
+    .safeParse(params);
+
+  if (!success) return <div>Invalid folder ID</div>;
+
+  const parsedFolderId = data.folderId;
 
   const [folders, files, parents] = await Promise.all([
-    QUERIES.getFolders(parseFolderId),
-    QUERIES.getFiles(parseFolderId),
-    QUERIES.getAllParentsForFolder(parseFolderId),
+    QUERIES.getFolders(parsedFolderId),
+    QUERIES.getFiles(parsedFolderId),
+    QUERIES.getAllParentsForFolder(parsedFolderId),
   ]);
 
   return (
@@ -22,7 +28,7 @@ export default async function GoogleDriveClone(props: {
       folders={folders}
       files={files}
       parents={parents}
-      currentFolderId={parseFolderId}
+      currentFolderId={parsedFolderId}
     />
   );
 }
