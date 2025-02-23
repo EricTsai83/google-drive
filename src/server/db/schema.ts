@@ -15,6 +15,27 @@ import {
  */
 export const createTable = pgTableCreator((name) => `google-drive_${name}`);
 
+export const folders_table = createTable(
+  "folders_table",
+  {
+    id: bigint("id", { mode: "number" })
+      .primaryKey()
+      .generatedByDefaultAsIdentity(),
+    ownerId: varchar("owner_id", { length: 256 }).notNull(),
+    name: varchar("name", { length: 256 }).notNull(),
+    parent: bigint("parent", { mode: "number" })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .references((): any => folders_table.id, {
+        onDelete: "cascade", // 當父資料夾被刪除時，子資料夾也會被刪除
+      }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => ({
+    parentIndex: index("folders_parent_index").on(t.parent),
+    ownerIdIndex: index("folders_owner_id_index").on(t.ownerId),
+  }),
+);
+
 export const files_table = createTable(
   "files_table",
   {
@@ -26,7 +47,11 @@ export const files_table = createTable(
     name: varchar("name", { length: 256 }).notNull(),
     size: integer("size").notNull(),
     url: varchar("url", { length: 256 }).notNull(),
-    parent: integer("parent").notNull(),
+    parent: bigint("parent", { mode: "number" })
+      .notNull()
+      .references(() => folders_table.id, {
+        onDelete: "cascade", // 當資料夾被刪除時，其中的檔案也會被刪除
+      }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (t) => ({
@@ -35,23 +60,5 @@ export const files_table = createTable(
   }),
 );
 
-export type DB_FileType = typeof files_table.$inferSelect;
-
-export const folders_table = createTable(
-  "folders_table",
-  {
-    id: bigint("id", { mode: "number" })
-      .primaryKey()
-      .generatedByDefaultAsIdentity(),
-    ownerId: varchar("owner_id", { length: 256 }).notNull(),
-    name: varchar("name", { length: 256 }).notNull(),
-    parent: integer("parent"),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-  },
-  (t) => ({
-    parentIndex: index("folders_parent_index").on(t.parent),
-    ownerIdIndex: index("folders_owner_id_index").on(t.ownerId),
-  }),
-);
-
 export type DB_FolderType = typeof folders_table.$inferSelect;
+export type DB_FileType = typeof files_table.$inferSelect;

@@ -49,7 +49,7 @@ export default function DriveContents(props: {
           <div className="border-b border-gray-700 px-6 py-4">
             <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
               <div className="col-span-6">Name</div>
-              <div className="col-span-2">Type</div>
+              <div className="col-span-2">Last Modified</div>
               <div className="col-span-3">Size</div>
               <div className="col-span-1"></div>
             </div>

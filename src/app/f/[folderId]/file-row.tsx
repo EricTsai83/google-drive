@@ -1,7 +1,7 @@
 import type { files_table, folders_table } from "@/server/db/schema";
 import { Folder as FolderIcon, FileIcon } from "lucide-react";
 import Link from "next/link";
-import ActionDropdownMenu from "./action-dropdown-menu";
+import { FileDropdownMenu, FolderDropdownMenu } from "./action-dropdown-menu";
 
 export function FileRow(props: { file: typeof files_table.$inferSelect }) {
   const { file } = props;
@@ -21,10 +21,10 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
             {file.name}
           </a>
         </div>
-        <div className="col-span-2 text-gray-400">{"file"}</div>
+        <div className="col-span-2 text-gray-400">{"1994/08/05"}</div>
         <div className="col-span-3 text-gray-400">{file.size}</div>
         <div className="col-span-1 text-gray-400">
-          <ActionDropdownMenu fileId={file.id} />
+          <FileDropdownMenu fileId={file.id} />
         </div>
       </div>
     </li>
@@ -50,8 +50,11 @@ export function FolderRow(props: {
             {folder.name}
           </Link>
         </div>
-        <div className="col-span-3 text-gray-400"></div>
-        <div className="col-span-3 text-gray-400"></div>
+        <div className="col-span-2 text-gray-400">{"1994/08/05"}</div>
+        <div className="col-span-3 text-gray-400">unknown</div>
+        <div className="col-span-1 text-gray-400">
+          <FolderDropdownMenu folderId={folder.id} />
+        </div>
       </div>
     </li>
   );
