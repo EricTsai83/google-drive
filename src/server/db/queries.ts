@@ -86,6 +86,24 @@ export const MUTATIONS = {
 
     const rootFolderId = rootFolder[0]!.id;
 
+    const nestedFolder = await db
+      .insert(foldersSchema)
+      .values({
+        name: "Nested Folder",
+        parent: rootFolderId,
+        ownerId: userId,
+      })
+      .returning();
+
+    const nestedFolder2 = await db
+      .insert(foldersSchema)
+      .values({
+        name: "Nested Folder 2",
+        parent: nestedFolder[0]!.id,
+        ownerId: userId,
+      })
+      .returning();
+
     await db.insert(foldersSchema).values([
       {
         name: "Trash",
@@ -100,6 +118,11 @@ export const MUTATIONS = {
       {
         name: "Documents",
         parent: rootFolderId,
+        ownerId: userId,
+      },
+      {
+        name: "Nested Folder 3",
+        parent: nestedFolder2[0]!.id,
         ownerId: userId,
       },
     ]);

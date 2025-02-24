@@ -66,11 +66,12 @@ export async function deleteFolder(folderId: number) {
     return { error: "Folder not found" };
   }
 
-  const dbDeleteResult = await db
+  const deletedFolderId = await db
     .delete(folders_table)
-    .where(eq(folders_table.id, folderId));
+    .where(eq(folders_table.id, folderId))
+    .returning({ deletedId: folders_table.id });
 
-  console.log(dbDeleteResult);
+  console.log(deletedFolderId);
 
   const c = await cookies();
   c.set("force-refresh", JSON.stringify(Math.random()));
