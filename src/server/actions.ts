@@ -66,7 +66,6 @@ export async function deleteFolder(folderId: number) {
     return { error: "Folder not found" };
   }
 
-  // 使用 Drizzle 的 sql 標籤模板獲取所有子資料夾
   const recursiveQuery = sql`
    WITH RECURSIVE folder_tree AS (
       SELECT id FROM ${folders_table} WHERE id = ${folderId}
@@ -96,6 +95,48 @@ export async function deleteFolder(folderId: number) {
   // 資料庫會自動級聯刪除相關的資料夾和檔案
   await db.delete(folders_table).where(eq(folders_table.id, folderId));
 
+  const c = await cookies();
+  c.set("force-refresh", JSON.stringify(Math.random()));
+
+  return { success: true };
+}
+
+export async function createFolder(name: string, parent: number | null) {
+  const session = await auth();
+  if (!session.userId) {
+    return { error: "Unauthorized" };
+  }
+
+  // Validate folder name
+  if (!name || name.trim().length === 0) {
+    return { error: "Folder name is required" };
+  }
+
+  // If parent folder is specified, verify it exists and belongs to the user
+  if (parent !== null) {
+    const [parentFolder] = await db
+      .select()
+      .from(folders_table)
+      .where(
+        and(
+          eq(folders_table.id, parent),
+          eq(folders_table.ownerId, session.userId),
+        ),
+      );
+
+    if (!parentFolder) {
+      return { error: "Parent folder not found" };
+    }
+  }
+
+  // Create the folder
+  await db.insert(folders_table).values({
+    name: name.trim(),
+    parent,
+    ownerId: session.userId,
+  });
+
+  // Force refresh like other actions
   const c = await cookies();
   c.set("force-refresh", JSON.stringify(Math.random()));
 

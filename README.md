@@ -8,18 +8,13 @@
 - [x] Add file uploading
 - [x] Add analytics
 - [x] Make sure sort order is consistent
-- [x] Add delete
+- [x] File deletions
 - [x] Real homepage + onboarding
+- [x] Nested folder deletion
+- [x] Add last modified time
+- [x] Folder creations
 
 ## Fun follow ups
-
-### Folder deletions
-
-Make sure you fetch all of the folders that have it as a parent, and their children too
-
-### Folder creations
-
-Make a server action that takes a name and parentId, and creates a folder with that name and parentId (don't forget to set the ownerId).
 
 ### Folder renames
 
@@ -42,3 +37,7 @@ You get the idea. Maybe check out my last tutorial?
 ### Implement dropzone
 
 ### Change size to readable format
+
+### Add timezone conversion
+
+### Add custom upload button and dropzone

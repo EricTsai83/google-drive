@@ -29,6 +29,7 @@ export const folders_table = createTable(
         onDelete: "cascade", // 當父資料夾被刪除時，子資料夾也會被刪除
       }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    lastModified: timestamp("last_modified").notNull().defaultNow(),
   },
   (t) => ({
     parentIndex: index("folders_parent_index").on(t.parent),
@@ -53,6 +54,7 @@ export const files_table = createTable(
         onDelete: "cascade", // 當資料夾被刪除時，其中的檔案也會被刪除
       }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
+    lastModified: timestamp("last_modified").notNull().defaultNow(),
   },
   (t) => ({
     parentIndex: index("files_parent_index").on(t.parent),
