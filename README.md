@@ -10,29 +10,21 @@
 - [x] Make sure sort order is consistent
 - [x] File deletions
 - [x] Real homepage + onboarding
-- [x] Nested folder deletion
+- [x] Nested folder deletions
 - [x] Add last modified time
 - [x] Folder creations
+- [x] Rename folders and files
+- [x] Access control: Check if user is owner before sowing the folder page.
 
 ## Fun follow ups
-
-### Folder renames
-
-Make a server action that takes a folderId and a newName, and updates the folder with the new name.
-
-### Access control
-
-Check if user is owner before sowing the folder page.
 
 ### Make a "file view" page
 
 You get the idea. Maybe check out my last tutorial?
 
-### Toasts
+### Add toasts for upload result
 
 ### Gray out a row while it's being deleted
-
-### Fix file type
 
 ### Implement dropzone
 
@@ -40,4 +32,4 @@ You get the idea. Maybe check out my last tutorial?
 
 ### Add timezone conversion
 
-### Add custom upload button and dropzone
+### Redesign the theme

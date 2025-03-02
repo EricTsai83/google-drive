@@ -8,6 +8,13 @@ import {
 import { eq, isNull, and } from "drizzle-orm/expressions";
 
 export const QUERIES = {
+  getFolderOwner: async function (folderId: number) {
+    const [folder] = await db
+      .select({ ownerId: foldersSchema.ownerId })
+      .from(foldersSchema)
+      .where(eq(foldersSchema.id, folderId));
+    return folder?.ownerId;
+  },
   getFolders: function (folderId: number) {
     return db
       .select()

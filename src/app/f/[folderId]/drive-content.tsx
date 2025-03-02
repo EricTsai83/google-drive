@@ -1,13 +1,13 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import { FileRow, FolderRow } from "./file-row";
+import { ItemRow } from "./_components/item-row";
 import type { files_table, folders_table } from "@/server/db/schema";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "@/components/uploadthing";
 import { useRouter } from "next/navigation";
-import { CreateFolderDialog } from "@/components/create-folder-dialog";
+import { CreateFolderDialog } from "@/app/f/[folderId]/_components/create-folder-dialog";
 
 type DriveContentsProps = {
   files: (typeof files_table.$inferSelect)[];
@@ -42,10 +42,10 @@ export default function DriveContents({
           </div>
           <ul>
             {folders.map((folder) => (
-              <FolderRow key={folder.id} folder={folder} />
+              <ItemRow key={folder.id} item={folder} type="folder" />
             ))}
             {files.map((file) => (
-              <FileRow key={file.id} file={file} />
+              <ItemRow key={file.id} item={file} type="file" />
             ))}
           </ul>
         </div>

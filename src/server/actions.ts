@@ -107,12 +107,10 @@ export async function createFolder(name: string, parent: number | null) {
     return { error: "Unauthorized" };
   }
 
-  // Validate folder name
   if (!name || name.trim().length === 0) {
     return { error: "Folder name is required" };
   }
 
-  // If parent folder is specified, verify it exists and belongs to the user
   if (parent !== null) {
     const [parentFolder] = await db
       .select()
@@ -129,14 +127,79 @@ export async function createFolder(name: string, parent: number | null) {
     }
   }
 
-  // Create the folder
   await db.insert(folders_table).values({
     name: name.trim(),
     parent,
     ownerId: session.userId,
   });
 
-  // Force refresh like other actions
+  const c = await cookies();
+  c.set("force-refresh", JSON.stringify(Math.random()));
+
+  return { success: true };
+}
+
+export async function renameFolder(folderId: number, newName: string) {
+  const session = await auth();
+  if (!session.userId) {
+    return { error: "Unauthorized" };
+  }
+
+  if (!newName || newName.trim().length === 0) {
+    return { error: "Folder name is required" };
+  }
+
+  const [folder] = await db
+    .select()
+    .from(folders_table)
+    .where(
+      and(
+        eq(folders_table.id, folderId),
+        eq(folders_table.ownerId, session.userId),
+      ),
+    );
+
+  if (!folder) {
+    return { error: "Folder not found" };
+  }
+
+  await db
+    .update(folders_table)
+    .set({ name: newName.trim() })
+    .where(eq(folders_table.id, folderId));
+
+  const c = await cookies();
+  c.set("force-refresh", JSON.stringify(Math.random()));
+
+  return { success: true };
+}
+
+export async function renameFile(fileId: number, newName: string) {
+  const session = await auth();
+  if (!session.userId) {
+    return { error: "Unauthorized" };
+  }
+
+  if (!newName || newName.trim().length === 0) {
+    return { error: "File name is required" };
+  }
+
+  const [file] = await db
+    .select()
+    .from(files_table)
+    .where(
+      and(eq(files_table.id, fileId), eq(files_table.ownerId, session.userId)),
+    );
+
+  if (!file) {
+    return { error: "File not found" };
+  }
+
+  await db
+    .update(files_table)
+    .set({ name: newName.trim() })
+    .where(eq(files_table.id, fileId));
+
   const c = await cookies();
   c.set("force-refresh", JSON.stringify(Math.random()));
 
