@@ -63,6 +63,13 @@ export const QUERIES = {
       );
     return folder[0];
   },
+  getImage: async function (fileId: number) {
+    const file = await db
+      .select()
+      .from(filesSchema)
+      .where(eq(filesSchema.id, fileId));
+    return file[0];
+  },
 };
 
 export const MUTATIONS = {

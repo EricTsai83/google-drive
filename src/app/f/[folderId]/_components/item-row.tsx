@@ -26,14 +26,14 @@ export function ItemRow({
               {item.name}
             </Link>
           ) : (
-            <a
-              href={(item as typeof files_table.$inferSelect).url}
+            // use modal to open the image file
+            <Link
               className="flex items-center text-gray-100 hover:text-blue-400"
-              target="_blank"
+              href={`/img/${item.id}`}
             >
               <Icon className="mr-3" size={20} />
               {item.name}
-            </a>
+            </Link>
           )}
         </div>
         <div className="col-span-2 text-gray-400">

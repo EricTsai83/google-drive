@@ -13,13 +13,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <body>
           <PostHogProvider>
-            {children}
+            <main>{children}</main>
+            {modal}
+            <div id="modal-root" />
             <Toaster />
           </PostHogProvider>
         </body>

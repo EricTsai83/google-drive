@@ -15,12 +15,9 @@
 - [x] Folder creations
 - [x] Rename folders and files
 - [x] Access control: Check if user is owner before sowing the folder page.
+- [ ] Create a 'File View' page (focus on displaying images).
 
 ## Fun follow ups
-
-### Make a "file view" page
-
-You get the idea. Maybe check out my last tutorial?
 
 ### Add toasts for upload result
 

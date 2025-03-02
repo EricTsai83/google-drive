@@ -16,7 +16,6 @@ const config = {
     // your project has TypeScript errors.
     ignoreBuildErrors: true,
   },
-
   async rewrites() {
     return [
       {
@@ -37,6 +36,9 @@ const config = {
   skipTrailingSlashRedirect: true,
   experimental: {
     authInterrupts: true,
+  },
+  images: {
+    domains: ["s7erf4ey6q.ufs.sh"],
   },
 };
 
