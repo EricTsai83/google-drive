@@ -17,7 +17,7 @@
 - [x] Access control: Check if user is owner before sowing the folder page.
 - [x] Create a 'File View' page (focus on displaying images)
 - [x] Add a delete button and a description card in 'File View'.
-- [x] Gray out a row while it's being deleted
+- [ ] Gray out a row while it's being deleted
 - [ ] Disable files from being clicked to open the file view page, except for images.
 
 ## Fun follow ups
@@ -25,8 +25,6 @@
 ### Add limitations on file uploads
 
 ### Add toasts for upload result
-
-### Gray out a row while it's being deleted
 
 ### Implement dropzone
 
