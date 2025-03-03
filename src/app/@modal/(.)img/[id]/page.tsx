@@ -9,9 +9,14 @@ export default async function PhotoModal(props: {
   //TODO: use safty parse
   const idAsNumber = Number(params.id);
   if (Number.isNaN(idAsNumber)) throw new Error("Invalid photo id");
-  const image = await QUERIES.getImage(idAsNumber);
+  const image = await QUERIES.getFile(idAsNumber);
 
-  if (!image) throw new Error("Image not found");
+  if (!image)
+    return (
+      <Modal>
+        <FullPageImageView image={null} />
+      </Modal>
+    );
 
   return (
     <Modal>

@@ -8,8 +8,6 @@ export default async function GoogleDriveClone(props: {
   params: Promise<{ folderId: string }>;
 }) {
   const params = await props.params;
-  const session = await auth();
-
   const { data, success } = z
     .object({
       folderId: z.coerce.number(),
@@ -21,8 +19,8 @@ export default async function GoogleDriveClone(props: {
   const parsedFolderId = data.folderId;
 
   const currentFolderOwnerId = await QUERIES.getFolderOwner(parsedFolderId);
+  const session = await auth();
 
-  // TODO: redirect to the error page to show the error message
   if (currentFolderOwnerId !== session.userId) {
     unauthorized();
   }
@@ -44,7 +42,6 @@ export default async function GoogleDriveClone(props: {
     (parent) => parent.ownerId !== currentFolderOwnerId,
   );
 
-  // TODO: redirect to the error page to show the error message
   if (hasInvalidFolder || hasInvalidFile || hasInvalidParent) {
     unauthorized();
   }

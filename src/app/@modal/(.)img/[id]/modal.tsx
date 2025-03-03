@@ -3,6 +3,7 @@
 import { type ElementRef, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
+import { Button } from "@/components/ui/button";
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -17,16 +18,17 @@ export function Modal({ children }: { children: React.ReactNode }) {
   function onDismiss() {
     router.back();
   }
-  // return null;
 
   return createPortal(
     <dialog
       ref={dialogRef}
-      className="h-screen w-screen bg-black/90 text-white"
+      className="relative h-screen w-screen bg-black/90 text-white focus:outline-none"
       onClose={onDismiss}
     >
+      <Button className="absolute left-4 top-4 z-10" onClick={onDismiss}>
+        Go Back
+      </Button>
       {children}
-      {/* <button onClick={onDismiss} className="close-button" /> */}
     </dialog>,
     document.getElementById("modal-root")!,
   );

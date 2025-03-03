@@ -15,7 +15,7 @@ export function BlurImage(props: React.ComponentProps<typeof Image>) {
         props.className,
         "duration-700 ease-in-out",
         isLoading
-          ? "scale-110 blur-2xl grayscale"
+          ? "scale-100 blur-2xl grayscale"
           : "scale-100 blur-0 grayscale-0",
       )}
       onLoadingComplete={() => setLoading(false)}

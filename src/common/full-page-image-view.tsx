@@ -1,47 +1,44 @@
-// import { Button } from "@/components/ui/button";
+"use client";
+
 import { type files_table } from "@/server/db/schema";
 import { BlurImage } from "@/components/blur-image";
+import ImageDescriptionCard from "@/components/image-description-card";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { deleteFile } from "@/server/actions";
 
 export function FullPageImageView({
   image,
 }: {
-  image: typeof files_table.$inferSelect;
+  image: typeof files_table.$inferSelect | null;
 }) {
+  if (!image) {
+    return (
+      <div className="flex h-full w-full items-center justify-center text-gray-400">
+        <p className="text-lg">Image has been deleted or could not be found.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex h-full w-screen min-w-0 items-center justify-center text-white">
-      <div className="flex-shrink flex-grow">
-        <BlurImage src={image.url} width={1000} height={1000} alt="" />
+    <div className="flex h-full w-full min-w-0 items-center justify-center text-white">
+      <BlurImage src={image.url} fill alt="" style={{ objectFit: "contain" }} />
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        {/* <img src={image.url} className="object-contain" alt={image.name} /> */}
+      <div className="absolute bottom-10 right-10 z-10">
+        <ImageDescriptionCard
+          ownerId={image.ownerId}
+          createdAt={image.createdAt.toLocaleDateString()}
+        />
       </div>
-      <div className="flex h-full w-56 flex-shrink-0 flex-col border-l">
-        <div className="border-b p-2 text-center text-xl">{image.name}</div>
 
-        <div className="p-2">
-          <div>Uploaded By:</div>
-          <div>{image.ownerId}</div>
-        </div>
-
-        <div className="p-2">
-          <div>Created On:</div>
-          <div>{image.createdAt.toLocaleDateString()}</div>
-        </div>
-
-        <div className="p-2">
-          {/* <form
-            action={async () => {
-              "use server";
-
-              await deleteImage(idAsNumber);
-            }}
-          >
-            <Button type="submit" variant="destructive">
-              Delete
-            </Button>
-          </form> */}
-        </div>
-      </div>
+      <Button
+        variant="destructive"
+        size="icon"
+        onClick={() => deleteFile(image.id)}
+        className="absolute right-4 top-4 z-10"
+      >
+        <Trash2 className="h-4 w-4" />
+      </Button>
     </div>
   );
 }

@@ -15,6 +15,13 @@ export const QUERIES = {
       .where(eq(foldersSchema.id, folderId));
     return folder?.ownerId;
   },
+  getFileOwner: async function (fileId: number) {
+    const [folder] = await db
+      .select({ ownerId: filesSchema.ownerId })
+      .from(filesSchema)
+      .where(eq(filesSchema.id, fileId));
+    return folder?.ownerId;
+  },
   getFolders: function (folderId: number) {
     return db
       .select()
@@ -63,7 +70,7 @@ export const QUERIES = {
       );
     return folder[0];
   },
-  getImage: async function (fileId: number) {
+  getFile: async function (fileId: number) {
     const file = await db
       .select()
       .from(filesSchema)
