@@ -15,12 +15,14 @@ export type ActionDropdownMenuProps = {
   id: number;
   name: string;
   type: "folder" | "file";
+  setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function ActionDropdownMenu({
   id,
   name,
   type,
+  setIsDeleting,
 }: ActionDropdownMenuProps) {
   const deleteAction = type === "folder" ? deleteFolder : deleteFile;
   const actionLabel = type === "folder" ? "Folder" : "File";
@@ -38,7 +40,9 @@ export function ActionDropdownMenu({
           className="text-red-500"
           onClick={async () => {
             try {
+              setIsDeleting(true);
               await deleteAction(id);
+              setIsDeleting(false);
               toast.success(`${actionLabel} deleted successfully`);
             } catch (error) {
               toast.error(

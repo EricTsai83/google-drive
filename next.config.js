@@ -38,7 +38,9 @@ const config = {
     authInterrupts: true,
   },
   images: {
-    domains: ["s7erf4ey6q.ufs.sh"],
+    remotePatterns: [
+      { protocol: "https", hostname: "s7erf4ey6q.ufs.sh", pathname: "/f/*" },
+    ],
   },
 };
 
