@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { unauthorized } from "next/navigation";
 
 export default async function ImageModal(props: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ imageId: string }>;
 }) {
   const params = await props.params;
   const { data, success } = z
