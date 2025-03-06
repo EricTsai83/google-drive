@@ -28,7 +28,7 @@ export default async function ImageModal(props: {
 
   const image = await QUERIES.getFile(parsedImageId);
 
-  if (!image) throw new Error("File not found");
+  if (!image) return <FullPageImageView image={null} />;
 
   return (
     <div className="flex h-full min-h-0 w-full min-w-0 overflow-y-hidden">
