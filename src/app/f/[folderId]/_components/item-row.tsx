@@ -4,7 +4,7 @@ import type { files_table, folders_table } from "@/server/db/schema";
 import { Folder as FolderIcon, FileIcon } from "lucide-react";
 import Link from "next/link";
 import { ActionDropdownMenu } from "./action-dropdown-menu";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { useState } from "react";
 import { cn, formatFileSize } from "@/lib/utils";
 
@@ -58,7 +58,7 @@ export function ItemRow({
           )}
         </div>
         <div className="col-span-2 text-gray-400">
-          {format(item.lastModified, "yyyy-MM-dd")}
+          {/* {format(item.lastModified, "yyyy-MM-dd")} */}
         </div>
         <div className="col-span-3 text-gray-400">
           {type === "file"
