@@ -8,7 +8,7 @@ type Props = {
 export default function ImageDescriptionCard({ ownerId, createdAt }: Props) {
   return (
     <div className="relative flex w-full items-center justify-center">
-      <Card className="w-full max-w-md border-white/30 bg-white/20 shadow-xl backdrop-blur-md transition-all hover:bg-white/30">
+      <Card className="w-full max-w-md border-white/30 bg-white/60 shadow-xl backdrop-blur-md transition-all">
         <CardContent className="p-8">
           <div className="space-y-6">
             <div className="space-y-2">
