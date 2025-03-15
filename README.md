@@ -35,3 +35,5 @@
 ### Redesign the theme
 
 ### Check all the auth stuff
+
+### improve the UX
