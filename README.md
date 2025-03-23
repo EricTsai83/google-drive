@@ -10,6 +10,15 @@
 - [x] Make sure sort order is consistent
 - [x] File deletions
 - [x] Real homepage + onboarding
+
+Theo taught me.
+
+Above the line: Theo taught me. [Reference](https://www.youtube.com/watch?v=c-hKSbzooAg)
+
+---
+
+Below the line: I learned by myself.
+
 - [x] Nested folder deletions
 - [x] Add last modified time
 - [x] Folder creations
