@@ -2,6 +2,8 @@
 
 ## TODO
 
+#### Theo taught me. [Reference](https://www.youtube.com/watch?v=c-hKSbzooAg)
+
 - [x] Set up the database and data model
 - [x] Move the folder open state to the URL
 - [x] Add authentication
@@ -11,11 +13,9 @@
 - [x] Implement file deletions
 - [x] Create a real homepage and onboarding process
 
-Theo taught me. [Reference](https://www.youtube.com/watch?v=c-hKSbzooAg)
-
 ---
 
-I learned on my own.
+#### I learned on my own.
 
 - [x] Nested folder deletions
 - [x] Add last modified time
