@@ -7,6 +7,8 @@ import { ActionDropdownMenu } from "./action-dropdown-menu";
 import { format } from "date-fns";
 import { useState } from "react";
 import { cn, formatFileSize } from "@/lib/utils";
+import { Eye } from "lucide-react";
+import { validImageExtensions } from "@/common/full-page-image-view";
 
 export function ItemRow({
   item,
@@ -25,6 +27,7 @@ export function ItemRow({
       })}
     >
       <div className="grid grid-cols-12 items-center gap-4">
+        {/* Folder name */}
         <div className="col-span-6 flex items-center">
           {type === "folder" ? (
             <Link
@@ -41,30 +44,42 @@ export function ItemRow({
               </span>
             </Link>
           ) : (
-            // use modal to open the image file
-            <Link
-              className={cn(
-                "flex items-center text-gray-100 hover:text-blue-400",
-                { "cursor-not-allowed": isDeleting },
-              )}
-              href={`/img/${item.id}`}
-              onClick={(e) => isDeleting && e.preventDefault()}
+            <div
+              className={cn("flex items-center gap-2 text-gray-100", {
+                "cursor-not-allowed": isDeleting,
+              })}
             >
-              <Icon className="mr-3" size={20} />
-              <span className={cn({ "line-through": isDeleting })}>
-                {item.name}
-              </span>
-            </Link>
+              <div className="flex items-center">
+                <Icon className="mr-3" size={20} />
+                <span className={cn({ "line-through": isDeleting })}>
+                  {item.name}
+                </span>
+              </div>
+              {validImageExtensions.some((ext) =>
+                item.name.toLowerCase().endsWith(ext),
+              ) && (
+                <Link
+                  className="hover:text-blue-400"
+                  href={`/img/${item.id}`}
+                  onClick={(e) => isDeleting && e.preventDefault()}
+                >
+                  <Eye />
+                </Link>
+              )}
+            </div>
           )}
         </div>
+        {/* Last modified date */}
         <div className="col-span-2 text-gray-400">
           {format(new Date(item.lastModified), "yyyy-MM-dd")}
         </div>
+        {/* File size */}
         <div className="col-span-3 text-gray-400">
           {type === "file"
             ? formatFileSize((item as typeof files_table.$inferSelect).size)
             : "—"}
         </div>
+        {/* Actions */}
         <div className="col-span-1 text-gray-400">
           <ActionDropdownMenu
             id={item.id}

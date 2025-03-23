@@ -7,6 +7,15 @@ import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteFile } from "@/server/actions";
 
+export const validImageExtensions = [
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".gif",
+  ".webp",
+  ".avif",
+];
+
 export function FullPageImageView({
   image,
 }: {
@@ -20,9 +29,22 @@ export function FullPageImageView({
     );
   }
 
+  const isValidImageUrl = validImageExtensions.some((ext) =>
+    image.name.toLowerCase().endsWith(ext),
+  );
+
   return (
     <div className="flex h-full w-full min-w-0 items-center justify-center text-white">
-      <BlurImage src={image.url} fill alt="" style={{ objectFit: "contain" }} />
+      {isValidImageUrl ? (
+        <BlurImage
+          src={image.url}
+          fill
+          alt=""
+          style={{ objectFit: "contain" }}
+        />
+      ) : (
+        <div>Invalid image format</div>
+      )}
 
       <div className="absolute bottom-10 right-10 z-10">
         <ImageDescriptionCard

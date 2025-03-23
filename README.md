@@ -18,7 +18,8 @@
 - [x] Create a 'File View' page (focus on displaying images)
 - [x] Add a delete button and a description card in 'File View'.
 - [x] Gray out a row while it's being deleted
-- [ ] Disable files from being clicked to open the file view page, except for images.
+- [x] Disable files from being clicked to open the file view page, except for images.
+- [x] Ensure that when a user changes the file extension, our application displays a `can't view` message.
 
 ## Fun follow ups
 
@@ -36,4 +37,6 @@
 
 ### Check all the auth stuff
 
-### improve the UX
+### Improve the UX
+
+### Refactor the async code using the tryCatch utility function

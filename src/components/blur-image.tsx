@@ -6,6 +6,9 @@ import cn from "clsx";
 
 export function BlurImage(props: React.ComponentProps<typeof Image>) {
   const [isLoading, setLoading] = useState(true);
+  const [hasError, setError] = useState(false);
+
+  if (hasError) return <div>Invalid image format</div>;
 
   return (
     <Image
@@ -19,6 +22,7 @@ export function BlurImage(props: React.ComponentProps<typeof Image>) {
           : "scale-100 blur-0 grayscale-0",
       )}
       onLoadingComplete={() => setLoading(false)}
+      onError={() => setError(true)}
     />
   );
 }
