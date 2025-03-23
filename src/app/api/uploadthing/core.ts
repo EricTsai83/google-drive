@@ -15,8 +15,8 @@ export const ourFileRouter = {
        * For full list of options and defaults, see the File Route API reference
        * @see https://docs.uploadthing.com/file-routes#route-config
        */
-      maxFileSize: "1GB",
-      maxFileCount: 9999,
+      maxFileSize: "32MB",
+      maxFileCount: 10,
     },
   })
     .input(
@@ -50,20 +50,24 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
       console.log("file url", file.ufsUrl);
+      try {
+        await MUTATIONS.createFile({
+          file: {
+            utFileKey: file.key,
+            name: file.name,
+            size: file.size,
+            url: file.ufsUrl,
+            parent: metadata.parentId,
+          },
+          userId: metadata.userId,
+        });
 
-      await MUTATIONS.createFile({
-        file: {
-          utFileKey: file.key,
-          name: file.name,
-          size: file.size,
-          url: file.ufsUrl,
-          parent: metadata.parentId,
-        },
-        userId: metadata.userId,
-      });
-
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId };
+        // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+        return { uploadedBy: metadata.userId };
+      } catch (error) {
+        console.error("Error saving file to database:", error);
+        throw new Error("Error saving file to database");
+      }
     }),
 } satisfies FileRouter;
 

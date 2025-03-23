@@ -27,14 +27,10 @@ Below the line: I learned by myself.
 - [x] Gray out a row while it's being deleted
 - [x] Disable files from being clicked to open the file view page, except for images.
 - [x] Ensure that when a user changes the file extension, our application displays a `can't view` message.
+- [x] Ensure that even if the image upload has not yet completed, we can leave the page and return later.
+- [ ] Implement dropzone
 
 ## Fun follow ups
-
-### Add limitations on file uploads
-
-### Add toasts for upload result
-
-### Implement dropzone
 
 ### Change file size to readable format
 
@@ -47,3 +43,5 @@ Below the line: I learned by myself.
 ### Improve the UX
 
 ### Refactor the async code using the tryCatch utility function
+
+### Improve the error handling stuff

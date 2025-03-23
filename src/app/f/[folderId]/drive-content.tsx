@@ -8,6 +8,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "@/components/uploadthing";
 import { useRouter } from "next/navigation";
 import { CreateFolderDialog } from "@/app/f/[folderId]/_components/create-folder-dialog";
+import { toast } from "sonner";
 
 type DriveContentsProps = {
   files: (typeof files_table.$inferSelect)[];
@@ -52,7 +53,13 @@ export default function DriveContents({
 
         <UploadButton
           endpoint="driveUploader"
-          onClientUploadComplete={() => navigate.refresh()}
+          onClientUploadComplete={() => {
+            toast.success("Files uploaded successfully");
+            navigate.refresh();
+          }}
+          onUploadError={(error) => {
+            toast.error(`Upload failed: ${error.message}`);
+          }}
           input={{ folderId: currentFolderId }}
         />
       </div>
