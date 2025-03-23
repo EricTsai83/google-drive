@@ -27,14 +27,12 @@ Below the line: I learned by myself.
 - [x] Gray out a row while it's being deleted
 - [x] Disable files from being clicked to open the file view page, except for images.
 - [x] Ensure that when a user changes the file extension, our application displays a `can't view` message.
-- [x] Ensure that even if the image upload has not yet completed, we can leave the page and return later.
-- [ ] Implement dropzone
+- [x] Ensure that even if the image upload has not yet completed, we can leave the page and return later and display a toast notification.
+- [x] Implement dropzone
+- [x] Change file size to readable format
+- [ ] Add timezone conversion
 
 ## Fun follow ups
-
-### Change file size to readable format
-
-### Add timezone conversion
 
 ### Redesign the theme
 

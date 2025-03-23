@@ -5,10 +5,10 @@ import { ItemRow } from "./_components/item-row";
 import type { files_table, folders_table } from "@/server/db/schema";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { UploadButton } from "@/components/uploadthing";
-import { useRouter } from "next/navigation";
+import { FileUploadDialog } from "./_components/file-upload-dialog";
+// import { UploadDropzone } from "@/components/uploadthing";
+
 import { CreateFolderDialog } from "@/app/f/[folderId]/_components/create-folder-dialog";
-import { toast } from "sonner";
 
 type DriveContentsProps = {
   files: (typeof files_table.$inferSelect)[];
@@ -23,8 +23,6 @@ export default function DriveContents({
   parents,
   currentFolderId,
 }: DriveContentsProps) {
-  const navigate = useRouter();
-
   return (
     <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
       <div className="mx-auto max-w-6xl">
@@ -50,18 +48,7 @@ export default function DriveContents({
             ))}
           </ul>
         </div>
-
-        <UploadButton
-          endpoint="driveUploader"
-          onClientUploadComplete={() => {
-            toast.success("Files uploaded successfully");
-            navigate.refresh();
-          }}
-          onUploadError={(error) => {
-            toast.error(`Upload failed: ${error.message}`);
-          }}
-          input={{ folderId: currentFolderId }}
-        />
+        <FileUploadDialog currentFolderId={currentFolderId} />
       </div>
     </div>
   );

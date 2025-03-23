@@ -8,7 +8,7 @@ export function BlurImage(props: React.ComponentProps<typeof Image>) {
   const [isLoading, setLoading] = useState(true);
   const [hasError, setError] = useState(false);
 
-  if (hasError) return <div>Invalid image format</div>;
+  if (hasError) return <div>{"The image cannot be previewed."}</div>;
 
   return (
     <Image

@@ -39,12 +39,12 @@ export function ActionDropdownMenu({
         <DropdownMenuItem
           className="text-red-500"
           onClick={async () => {
+            setIsDeleting(true);
             try {
-              setIsDeleting(true);
               await deleteAction(id);
-              setIsDeleting(false);
               toast.success(`${actionLabel} deleted successfully`);
             } catch (error) {
+              setIsDeleting(false);
               toast.error(
                 `Failed to delete ${type}: ${error instanceof Error ? error.message : "Unknown error"}`,
               );

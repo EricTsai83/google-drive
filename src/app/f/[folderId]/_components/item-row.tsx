@@ -22,7 +22,7 @@ export function ItemRow({
 
   return (
     <li
-      className={cn("border-b border-gray-700 px-6 py-4 hover:bg-gray-700", {
+      className={cn("border-t border-gray-700 px-6 py-4 hover:bg-gray-700", {
         "animate-pulse bg-gray-600": isDeleting,
       })}
     >
