@@ -11,8 +11,6 @@
 - [x] File deletions
 - [x] Real homepage + onboarding
 
-Theo taught me.
-
 Above the line: Theo taught me. [Reference](https://www.youtube.com/watch?v=c-hKSbzooAg)
 
 ---
