@@ -6,8 +6,6 @@ import type { files_table, folders_table } from "@/server/db/schema";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { FileUploadDialog } from "./_components/file-upload-dialog";
-// import { UploadDropzone } from "@/components/uploadthing";
-
 import { CreateFolderDialog } from "@/app/f/[folderId]/_components/create-folder-dialog";
 
 type DriveContentsProps = {
@@ -61,7 +59,7 @@ function BreadcrumbNav({
 }) {
   return (
     <div className="flex items-center">
-      <Link href="/f/1" className="mr-2 text-gray-300 hover:text-white">
+      <Link href="/" className="mr-2 text-gray-300 hover:text-white">
         My Drive
       </Link>
       {parents.map((folder) => (

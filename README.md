@@ -30,7 +30,7 @@
 - [x] Ensure that even if the image upload has not completed, we can leave the page, return later, and display a toast notification.
 - [x] Implement the dropzone
 - [x] Convert file sizes into a readable format
-- [ ] Add timezone conversion
+- [x] Redesign the theme
 
 ## Fun follow ups
 
