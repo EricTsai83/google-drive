@@ -29,7 +29,7 @@ export default async function PhotoModal(props: {
 
   return (
     <Modal>
-      <FullPageImageView image={image} />
+      <FullPageImageView image={image ?? null} />
     </Modal>
   );
 }

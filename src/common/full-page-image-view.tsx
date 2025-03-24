@@ -20,7 +20,7 @@ export const validImageExtensions = [
 export function FullPageImageView({
   image,
 }: {
-  image: typeof files_table.$inferSelect | undefined;
+  image: typeof files_table.$inferSelect | null;
 }) {
   const router = useRouter();
 
