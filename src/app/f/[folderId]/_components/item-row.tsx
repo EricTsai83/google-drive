@@ -22,8 +22,8 @@ export function ItemRow({
 
   return (
     <li
-      className={cn("border-t border-gray-700 px-6 py-4 hover:bg-gray-700", {
-        "animate-pulse bg-gray-600": isDeleting,
+      className={cn("border-t border-gray-700 px-6 py-4", {
+        "animate-pulse bg-gray-200": isDeleting,
       })}
     >
       <div className="grid grid-cols-12 items-center gap-4">
@@ -31,10 +31,9 @@ export function ItemRow({
         <div className="col-span-6 flex items-center">
           {type === "folder" ? (
             <Link
-              className={cn(
-                "flex items-center text-gray-100 hover:text-blue-400",
-                { "cursor-not-allowed": isDeleting },
-              )}
+              className={cn("flex items-center", {
+                "cursor-not-allowed": isDeleting,
+              })}
               href={`/f/${item.id}`}
               onClick={(e) => isDeleting && e.preventDefault()}
             >
@@ -45,7 +44,7 @@ export function ItemRow({
             </Link>
           ) : (
             <div
-              className={cn("flex items-center gap-2 text-gray-100", {
+              className={cn("flex items-center gap-2", {
                 "cursor-not-allowed": isDeleting,
               })}
             >
@@ -59,7 +58,7 @@ export function ItemRow({
                 item.name.toLowerCase().endsWith(ext),
               ) && (
                 <Link
-                  className="hover:text-blue-400"
+                  className="hover:text-primary"
                   href={`/img/${item.id}`}
                   onClick={(e) => isDeleting && e.preventDefault()}
                 >
@@ -70,17 +69,17 @@ export function ItemRow({
           )}
         </div>
         {/* Last modified date */}
-        <div className="col-span-2 text-gray-400">
+        <div className="col-span-2">
           {format(new Date(item.lastModified), "yyyy-MM-dd")}
         </div>
         {/* File size */}
-        <div className="col-span-3 text-gray-400">
+        <div className="col-span-3">
           {type === "file"
             ? formatFileSize((item as typeof files_table.$inferSelect).size)
             : "—"}
         </div>
         {/* Actions */}
-        <div className="col-span-1 text-gray-400">
+        <div className="col-span-1">
           <ActionDropdownMenu
             id={item.id}
             name={item.name}

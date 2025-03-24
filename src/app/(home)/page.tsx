@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 export default function HomePage() {
   return (
     <>
-      <h1 className="mb-4 bg-gradient-to-r from-neutral-200 to-neutral-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+      <h1 className="mb-4 text-5xl font-bold md:text-6xl">
         Google Drive Clone, But Worse
       </h1>
-      <p className="mx-auto mb-8 max-w-md text-xl text-neutral-400 md:text-2xl">
+      <p className="mx-auto mb-8 max-w-md text-xl md:text-2xl">
         {"Learn from Theo, the best software dev nerd in the world."}
       </p>
       <form
@@ -24,11 +24,7 @@ export default function HomePage() {
           return redirect("/drive");
         }}
       >
-        <Button
-          size="lg"
-          type="submit"
-          className="border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
-        >
+        <Button size="lg" type="submit">
           Get Started
         </Button>
       </form>

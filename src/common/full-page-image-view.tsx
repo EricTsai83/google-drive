@@ -6,6 +6,7 @@ import ImageDescriptionCard from "@/components/image-description-card";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteFile } from "@/server/actions";
+import { useRouter } from "next/navigation";
 
 export const validImageExtensions = [
   ".jpg",
@@ -19,8 +20,10 @@ export const validImageExtensions = [
 export function FullPageImageView({
   image,
 }: {
-  image: typeof files_table.$inferSelect | null;
+  image: typeof files_table.$inferSelect | undefined;
 }) {
+  const router = useRouter();
+
   if (!image) {
     return (
       <div className="flex h-full w-full items-center justify-center text-gray-400">
@@ -32,6 +35,13 @@ export function FullPageImageView({
   const isValidImageUrl = validImageExtensions.some((ext) =>
     image.name.toLowerCase().endsWith(ext),
   );
+
+  const handleDelete = async () => {
+    const result = await deleteFile(image.id);
+    if (result.success) {
+      router.back(); // Navigate back to previous page
+    }
+  };
 
   return (
     <div className="flex h-full w-full min-w-0 items-center justify-center text-white">
@@ -56,7 +66,7 @@ export function FullPageImageView({
       <Button
         variant="destructive"
         size="icon"
-        onClick={() => deleteFile(image.id)}
+        onClick={handleDelete}
         className="absolute right-4 top-4 z-10"
       >
         <Trash2 className="h-4 w-4" />

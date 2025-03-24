@@ -46,11 +46,11 @@ export function CreateFolderDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-gray-800">
+        <Button>
           <Plus /> Create a Folder
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-gray-900 text-gray-100 sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create a Folder</DialogTitle>
           <DialogDescription className="sr-only">
@@ -69,8 +69,8 @@ export function CreateFolderDialog({
         </div>
         <div className="flex w-full justify-between">
           <Button
+            variant="secondary"
             type="submit"
-            className="bg-gray-800"
             onClick={() => setIsOpen(false)}
           >
             Cancel
@@ -78,7 +78,6 @@ export function CreateFolderDialog({
 
           <Button
             type="submit"
-            className="bg-gray-800"
             onClick={() => onCreate(folderName, currentFolderId)}
           >
             Create

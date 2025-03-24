@@ -27,13 +27,6 @@ export default async function PhotoModal(props: {
   }
   const image = await QUERIES.getFile(parsedImageId);
 
-  if (!image)
-    return (
-      <Modal>
-        <FullPageImageView image={null} />
-      </Modal>
-    );
-
   return (
     <Modal>
       <FullPageImageView image={image} />

@@ -12,7 +12,7 @@ type FileToUpload = {
   file: File;
 };
 
-export function FileUploadDialog({
+export function FileUploadDropzone({
   currentFolderId,
 }: {
   currentFolderId: number;
@@ -30,7 +30,7 @@ export function FileUploadDialog({
   }
 
   return (
-    <div className="mt-10">
+    <div>
       <UploadDropzone
         endpoint="driveUploader"
         onClientUploadComplete={() => {
@@ -60,60 +60,49 @@ export function FileUploadDialog({
           setFilesToUpload((prev) => [...prev, ...newFiles]);
         }}
         appearance={{
-          button({ isUploading, uploadProgress }) {
-            return {
-              ...(isUploading && {
-                position: "relative",
-                "&::after": {
-                  content: `'${uploadProgress}%'`, // show progress percentage
-                },
-              }),
-            };
-          },
-          container: "cursor-pointer bg-slate-800",
-          label:
-            "w-full h-full flex flex-col justify-start mt-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-offset-0",
+          button:
+            "ut-ready:bg-red-500 ut-uploading:cursor-not-allowed bg-red-400 bg-none after:bg-red-500 ut-uploading:pointer-events-none focus:outline-none focus:ring-0 focus:ring-offset-0",
+          container: "cursor-pointer ut-uploading:pointer-events-none",
+          label: "w-full h-full flex flex-col justify-start mt-0 ",
           uploadIcon: filesToUpload.length > 0 ? "hidden" : undefined,
           allowedContent: filesToUpload.length > 0 ? "hidden" : undefined,
         }}
         content={{
           label:
             filesToUpload.length > 0 ? (
-              <div className="h-full w-full rounded-md bg-slate-900 p-4 text-gray-300">
+              <div className="hover:none h-full w-full rounded-md p-4 text-secondary-foreground">
                 {filesToUpload.map((file) => (
                   <div
                     key={file.name}
-                    className="flex items-center justify-between border-b border-gray-700 px-2"
+                    className="flex items-center justify-between border-b border-gray-300 px-2"
                   >
                     <span className="text-sm">{file.name}</span>
                     <Button
                       variant="ghost"
+                      size="icon"
                       onClick={(event) => removeFile(event, file.name)}
-                      className="ml-2 rounded p-1 hover:bg-slate-700"
+                      className="p-1 hover:bg-transparent hover:text-primary"
                     >
-                      <X
-                        size={16}
-                        className="text-gray-300 hover:text-red-400"
-                      />
+                      <X size={16} />
                     </Button>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm font-semibold text-gray-400">
+              <p className="text-sm font-semibold text-gray-500">
                 Choose file(s) or drag and drop
               </p>
             ),
-          button: ({ ready, isUploading, uploadProgress }) => {
-            if (!ready) return "Loading...";
-            if (isUploading) {
-              return <span className="z-50 text-sm">{uploadProgress}%</span>;
-            }
-            if (filesToUpload.length > 0)
-              return `Upload ${filesToUpload.length} file${filesToUpload.length > 1 ? "s" : ""}`;
+          // button: ({ ready, isUploading, uploadProgress }) => {
+          //   if (!ready) return "Loading...";
+          //   if (isUploading) {
+          //     return <span className="z-50 text-sm">{uploadProgress}%</span>;
+          //   }
+          //   if (filesToUpload.length > 0)
+          //     return `Upload ${filesToUpload.length} file${filesToUpload.length > 1 ? "s" : ""}`;
 
-            return "Choose File(s)";
-          },
+          //   return "Choose File(s)";
+          // },
         }}
       />
     </div>
