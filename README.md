@@ -31,10 +31,9 @@
 - [x] Implement the dropzone
 - [x] Convert file sizes into a readable format
 - [x] Redesign the theme
+- [ ] Check all the auth stuff
 
 ## Fun follow ups
-
-### Redesign the theme
 
 ### Check all the auth stuff
 

@@ -47,7 +47,6 @@ export default function DriveContents({
             ))}
           </ul>
         </div>
-        {/* <FileUploadDialog currentFolderId={currentFolderId} /> */}
       </div>
     </div>
   );
@@ -77,7 +76,7 @@ function BreadcrumbNav({
 
 function AuthButtons() {
   return (
-    <div>
+    <div className="h-7 w-7">
       <SignedOut>
         <SignInButton />
       </SignedOut>
