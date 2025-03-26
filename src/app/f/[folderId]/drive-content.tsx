@@ -7,6 +7,7 @@ import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { CreateFolderDialog } from "@/app/f/[folderId]/_components/create-folder-dialog";
 import { FileUploadDropzoneDialog } from "./_components/file-upload-dropzone-dialog";
+import ModeToggle from "@/components/mode-toggle";
 
 type DriveContentsProps = {
   files: (typeof files_table.$inferSelect)[];
@@ -26,7 +27,10 @@ export default function DriveContents({
       <div className="mx-auto max-w-6xl">
         <header className="mb-6 flex items-center justify-between">
           <BreadcrumbNav parents={parents} />
-          <AuthButtons />
+          <div className="flex items-center gap-6">
+            <AuthButtons />
+            <ModeToggle />
+          </div>
         </header>
 
         <div className="mb-4 flex justify-between">

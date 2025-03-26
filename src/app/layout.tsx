@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "./_providers/posthog-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/app/_providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "Google Drive Clone",
@@ -17,13 +18,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable}`}>
+      <html
+        lang="en"
+        className={`${GeistSans.variable}`}
+        suppressHydrationWarning
+      >
         <body>
           <PostHogProvider>
-            <main>{children}</main>
-            {modal}
-            <div id="modal-root" />
-            <Toaster richColors />
+            <ThemeProvider attribute="class" defaultTheme="system">
+              <main>{children}</main>
+              {modal}
+              <div id="modal-root" />
+              <Toaster richColors />
+            </ThemeProvider>
           </PostHogProvider>
         </body>
       </html>

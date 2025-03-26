@@ -29,6 +29,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    /* mode-toggle */
+    --color-blue-400: rgb(96 165 250);
+    --color-yellow-600: rgb(202 138 4);
   }
 
   .dark {

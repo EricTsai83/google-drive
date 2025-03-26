@@ -1,9 +1,10 @@
-import { BreadcrumbNavSkeleton } from "./_components/skeleton/breadcrumb-nav-skeleton";
-import { AuthButtonsSkeleton } from "./_components/skeleton/auth-buttons-skeleton";
-import { CreateFolderDialogSkeleton } from "./_components/skeleton/create-folder-dialog-skeleton";
-import { FileUploadDropzoneDialogSkeleton } from "./_components/skeleton/file-upload-dropzone-dialog-skeleton";
-import { TableHeaderSkeleton } from "./_components/skeleton/table-header-skeleton";
-import { ItemRowSkeletonList } from "./_components/skeleton/item-row-skeleton";
+import { BreadcrumbNavSkeleton } from "./_components/skeletons/breadcrumb-nav-skeleton";
+import { AuthButtonsSkeleton } from "./_components/skeletons/auth-buttons-skeleton";
+import { CreateFolderDialogSkeleton } from "./_components/skeletons/create-folder-dialog-skeleton";
+import { FileUploadDropzoneDialogSkeleton } from "./_components/skeletons/file-upload-dropzone-dialog-skeleton";
+import { TableHeaderSkeleton } from "./_components/skeletons/table-header-skeleton";
+import { ItemRowSkeletonList } from "./_components/skeletons/item-row-skeleton";
+import ModeToggleSkeleton from "@/components/skeletons/mode-toggle-skeleton";
 
 export default function Loading() {
   return (
@@ -12,7 +13,10 @@ export default function Loading() {
         {/* 複製相同的布局，但使用骨架屏 */}
         <header className="mb-6 flex items-center justify-between">
           <BreadcrumbNavSkeleton />
-          <AuthButtonsSkeleton />
+          <div className="flex items-center gap-6">
+            <AuthButtonsSkeleton />
+            <ModeToggleSkeleton />
+          </div>
         </header>
 
         <div className="mb-4 flex justify-between">
