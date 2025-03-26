@@ -71,8 +71,8 @@ export default function ModeToggle() {
   return (
     <div className="flex items-center justify-center">
       <Button
-        className="flex h-12 w-12 items-center justify-center p-0 [&_svg]:size-8"
-        variant="outline"
+        className="flex h-7 w-7 items-center justify-center p-0 hover:bg-transparent [&_svg]:size-8"
+        variant="ghost"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       >

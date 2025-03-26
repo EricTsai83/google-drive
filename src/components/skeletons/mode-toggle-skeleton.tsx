@@ -15,7 +15,7 @@ export default function ModeToggleSkeleton() {
   return (
     <div className="flex items-center justify-center">
       <Button
-        className="flex h-12 w-12 items-center justify-center p-0"
+        className="flex h-7 w-7 items-center justify-center p-0"
         variant="outline"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       >
