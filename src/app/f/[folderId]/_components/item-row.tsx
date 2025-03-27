@@ -23,7 +23,7 @@ export function ItemRow({
   return (
     <li
       className={cn("border-t border-gray-700 px-6 py-4", {
-        "animate-pulse bg-gray-200": isDeleting,
+        "animate-pulse bg-gray-200 dark:bg-gray-800": isDeleting,
       })}
     >
       <div className="grid grid-cols-12 items-center gap-4">

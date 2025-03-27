@@ -27,12 +27,15 @@ export function FileUploadDropzoneDialog({
           <CloudUpload /> Upload File(s)
         </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogTitle className="">Upload files</DialogTitle>
+      <DialogContent className="sm:h-[500px] sm:max-w-[680px]">
+        <DialogTitle>Upload files</DialogTitle>
         <DialogDescription className="sr-only">
           Upload files to your Drive
         </DialogDescription>
-        <FileUploadDropzone currentFolderId={currentFolderId} />
+        <FileUploadDropzone
+          currentFolderId={currentFolderId}
+          setIsOpen={setIsOpen}
+        />
       </DialogContent>
     </Dialog>
   );
