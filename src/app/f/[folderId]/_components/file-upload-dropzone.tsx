@@ -14,12 +14,12 @@ type FileToUpload = {
   file: File;
 };
 
-interface UploadProcess {
+type UploadProcess = {
   id: string;
   description: string;
   resolve: (value: { name: string }) => void;
   reject: (reason?: unknown) => void;
-}
+};
 
 export function FileUploadDropzone({
   currentFolderId,
@@ -29,13 +29,18 @@ export function FileUploadDropzone({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useRouter();
+  // State for storing files awaiting upload
   const [filesToUpload, setFilesToUpload] = useState<FileToUpload[]>([]);
+  // Ref to keep track of all selected files
   const allFilesRef = useRef<FileToUpload[]>([]);
+  // Ref to store the current batch id for the upload process
   const currentBatchIdRef = useRef<string | null>(null);
+  // Ref mapping batch id to its upload process details
   const uploadProcessesRef = useRef<Map<string, UploadProcess>>(new Map());
 
+  // Function to add new files to the upload list
   const addFiles = (newFiles: FileList | File[]) => {
-    // Force a new batch by clearing previous files.
+    // Generate a new batch id if one hasn't been set
     if (!currentBatchIdRef.current) {
       currentBatchIdRef.current = nanoid();
     }
@@ -56,14 +61,17 @@ export function FileUploadDropzone({
     <>
       <UploadDropzone
         endpoint="driveUploader"
+        // Provide the File objects before uploading begins
         onBeforeUploadBegin={() =>
           allFilesRef.current.map((fileObj) => fileObj.file)
         }
         onUploadBegin={(fileName) => {
+          // Get the current batch id; if a process already exists, do nothing
           const batchId = currentBatchIdRef.current;
           if (!batchId || uploadProcessesRef.current.has(batchId)) return;
 
           const uniqueToastId = nanoid();
+          // Choose a description based on the number of files selected
           const description =
             filesToUpload.length > 1
               ? `${filesToUpload.length} files`
@@ -71,6 +79,7 @@ export function FileUploadDropzone({
 
           let localResolve: (value: { name: string }) => void;
           let localReject: (reason?: unknown) => void;
+          // Create a promise to track the upload status
           const uploadPromise = new Promise<{ name: string }>(
             (resolve, reject) => {
               localResolve = resolve;
@@ -78,6 +87,7 @@ export function FileUploadDropzone({
             },
           );
 
+          // Save the upload process for this batch
           uploadProcessesRef.current.set(batchId, {
             id: uniqueToastId,
             description,
@@ -85,12 +95,14 @@ export function FileUploadDropzone({
             reject: localReject!,
           });
 
+          // Close the upload dialog
           setIsOpen(false);
+          // Display a toast notification tracking the upload status
           toast.promise(uploadPromise, {
             id: uniqueToastId,
             loading: (
               <LoadingToast
-                title="Uploading"
+                title="File Upload Status"
                 description={`Uploading ${description}`}
                 progress={0}
               />
@@ -102,11 +114,12 @@ export function FileUploadDropzone({
             error: "Failed to upload files",
           });
         }}
+        // Update the toast progress during file upload
         onUploadProgress={(progressValue) => {
           uploadProcessesRef.current.forEach((process) => {
             toast.loading(
               <LoadingToast
-                title="Uploading"
+                title="File Upload Status"
                 description={`Uploading ${process.description}`}
                 progress={progressValue}
               />,
@@ -114,6 +127,7 @@ export function FileUploadDropzone({
             );
           });
         }}
+        // Once the client completes the upload, resolve the upload process
         onClientUploadComplete={() => {
           const batchId = currentBatchIdRef.current;
           if (batchId) {
@@ -124,10 +138,12 @@ export function FileUploadDropzone({
             }
             currentBatchIdRef.current = null;
           }
+          // Clear the files state and refresh the page
           setFilesToUpload([]);
           allFilesRef.current = [];
           navigate.refresh();
         }}
+        // Handle upload errors
         onUploadError={(error) => {
           toast.error(`Upload failed: ${error.message}`);
           const batchId = currentBatchIdRef.current;
@@ -140,7 +156,9 @@ export function FileUploadDropzone({
             currentBatchIdRef.current = null;
           }
         }}
+        // Pass additional input parameters to the upload endpoint
         input={{ folderId: currentFolderId }}
+        // When file selection changes, add the new files
         onChange={(acceptedFiles) => addFiles(acceptedFiles)}
         appearance={{
           button:
@@ -165,8 +183,10 @@ export function FileUploadDropzone({
                       variant="ghost"
                       size="icon"
                       onClick={(event) => {
+                        // Prevent event propagation
                         event.preventDefault();
                         event.stopPropagation();
+                        // Remove the selected file from the list
                         setFilesToUpload((prev) => {
                           const updated = prev.filter(
                             (f) => f.name !== file.name,
@@ -187,6 +207,7 @@ export function FileUploadDropzone({
                 Choose file(s) or drag and drop
               </p>
             ),
+          // Button content changes based on the upload state
           button: ({ ready, isUploading, uploadProgress }) => {
             if (!ready) return "Loading...";
             if (isUploading) {
