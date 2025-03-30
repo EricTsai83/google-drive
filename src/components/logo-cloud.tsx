@@ -14,75 +14,75 @@ export function LogoCloud() {
             <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/t3.svg"
                   alt="T3 Stack Logo"
                   height={20}
-                  width={100}
+                  width={26}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/shadcn-ui.svg"
                   alt="Shadcn UI Logo"
                   height={20}
-                  width={100}
+                  width={118}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/tailwind-css.svg"
                   alt="Tailwind CSS Logo"
                   height={20}
-                  width={100}
+                  width={162}
                 />
               </div>
 
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/vercel.svg"
                   alt="Vercel Logo"
                   height={20}
-                  width={100}
+                  width={87}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/uploadthing.svg"
                   alt="Uploadthing Logo"
                   height={20}
-                  width={100}
+                  width={117}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 w-fit dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/nextjs.svg"
                   alt="Next.js Logo"
                   height={20}
-                  width={100}
+                  width={98}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/drizzle-orm.svg"
                   alt="Drizzle ORM Logo"
-                  height={30}
-                  width={100}
+                  height={20}
+                  width={141}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-5 dark:invert"
+                  className="mx-auto h-5 w-auto dark:invert"
                   src="/clerk.svg"
                   alt="Clerk Logo"
-                  height={30}
-                  width={100}
+                  height={20}
+                  width={78}
                 />
               </div>
             </InfiniteSlider>

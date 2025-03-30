@@ -32,7 +32,7 @@
 - [x] Convert file sizes into a readable format
 - [x] Redesign the theme
 - [x] Prettify the upload toast
-- [ ] Check all the auth stuff
+- [ ] Implement all authentication stuff, including the per-user upload limit
 
 ## Fun follow ups
 
