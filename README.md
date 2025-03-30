@@ -32,6 +32,7 @@
 - [x] Convert file sizes into a readable format
 - [x] Redesign the theme
 - [x] Prettify the upload toast
+- [x] Enhancing the responsiveness of the call-to-action button
 - [ ] Implement all authentication stuff, including the per-user upload limit
 
 ## Fun follow ups
@@ -39,7 +40,5 @@
 ### Add infinite scroll
 
 ### Refactor the async code using the tryCatch utility function
-
-### Improve the UX, especially by enhancing the responsiveness of the call-to-action button
 
 ### Improve the error handling stuff

@@ -39,16 +39,6 @@ export function LogoCloud() {
                   width={162}
                 />
               </div>
-
-              <div className="flex">
-                <Image
-                  className="mx-auto h-5 w-auto dark:invert"
-                  src="/vercel.svg"
-                  alt="Vercel Logo"
-                  height={20}
-                  width={87}
-                />
-              </div>
               <div className="flex">
                 <Image
                   className="mx-auto h-5 w-auto dark:invert"

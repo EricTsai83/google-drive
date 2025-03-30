@@ -1,9 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { LogoCloud } from "@/components/logo-cloud";
+import { GetStartedButton } from "@/components/get-started-button";
 
 const transitionVariants = {
   item: {
@@ -80,9 +80,11 @@ export default function HomePage() {
                   className="mx-auto max-w-sm"
                 >
                   <div className="shadow shadow-zinc-950/5">
-                    <Button className="w-full" size="lg" type="submit">
+                    {/* <Button className="w-full" size="lg" type="submit">
                       Get Started
-                    </Button>
+                    </Button> */}
+
+                    <GetStartedButton />
                   </div>
                 </form>
               </AnimatedGroup>
