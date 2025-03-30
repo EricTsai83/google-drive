@@ -40,6 +40,6 @@
 
 ### Refactor the async code using the tryCatch utility function
 
-### Improve the UX
+### Improve the UX, especially by enhancing the responsiveness of the call-to-action button
 
 ### Improve the error handling stuff
