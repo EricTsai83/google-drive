@@ -31,14 +31,15 @@
 - [x] Implement the dropzone
 - [x] Convert file sizes into a readable format
 - [x] Redesign the theme
+- [x] Prettify the upload toast
 - [ ] Check all the auth stuff
 
 ## Fun follow ups
 
-### Check all the auth stuff
-
-### Improve the UX
+### Add infinite scroll
 
 ### Refactor the async code using the tryCatch utility function
+
+### Improve the UX
 
 ### Improve the error handling stuff

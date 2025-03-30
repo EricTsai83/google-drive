@@ -29,7 +29,7 @@ export default function RootLayout({
               <main>{children}</main>
               {modal}
               <div id="modal-root" />
-              <Toaster richColors />
+              <Toaster richColors icons={{ loading: <></> }} />
             </ThemeProvider>
           </PostHogProvider>
         </body>
