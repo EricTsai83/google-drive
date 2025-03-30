@@ -3,7 +3,8 @@
 import { UploadDropzone } from "@/components/uploadthing";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
+import { nanoid } from "nanoid";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingToast } from "@/components/loading-toast";
@@ -12,6 +13,13 @@ type FileToUpload = {
   name: string;
   file: File;
 };
+
+interface UploadProcess {
+  id: string;
+  description: string;
+  resolve: (value: { name: string }) => void;
+  reject: (reason?: unknown) => void;
+}
 
 export function FileUploadDropzone({
   currentFolderId,
@@ -22,144 +30,118 @@ export function FileUploadDropzone({
 }) {
   const navigate = useRouter();
   const [filesToUpload, setFilesToUpload] = useState<FileToUpload[]>([]);
-  // Using a ref to accumulate the latest file list
   const allFilesRef = useRef<FileToUpload[]>([]);
-  // To store a unique toast id
-  const uploadToastIdRef = useRef<string | number | null>(null);
-  // Use counter to generate a unique id
-  const toastCounterRef = useRef(0);
+  const currentBatchIdRef = useRef<string | null>(null);
+  const uploadProcessesRef = useRef<Map<string, UploadProcess>>(new Map());
 
-  // Storing the resolve/reject functions of the upload promise
-  const uploadPromiseRef = useRef<{
-    resolve: (value: { name: string }) => void;
-    reject: (reason?: unknown) => void;
-  } | null>(null);
-  // To store the description to be displayed in the toast
-  const currentToastDescriptionRef = useRef("");
-
-  // Encapsulate a function to update files in both state and ref
   const addFiles = (newFiles: FileList | File[]) => {
-    // First, convert files to our format
+    // Force a new batch by clearing previous files.
+    if (!currentBatchIdRef.current) {
+      currentBatchIdRef.current = nanoid();
+    }
+
     const formattedFiles = Array.from(newFiles).map((file) => ({
       name: file.name,
       file,
     }));
+
     setFilesToUpload((prev) => {
-      const updated = [...prev, ...formattedFiles];
-      // Ensure the ref is updated synchronously
-      allFilesRef.current = updated;
-      return updated;
+      const updatedFiles = [...prev, ...formattedFiles];
+      allFilesRef.current = updatedFiles;
+      return updatedFiles;
     });
   };
-
-  function removeFile(
-    event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string,
-  ) {
-    event.preventDefault();
-    event.stopPropagation();
-    setFilesToUpload((prev) => {
-      const updated = prev.filter((file) => file.name !== fileName);
-      allFilesRef.current = updated;
-      return updated;
-    });
-  }
 
   return (
     <>
       <UploadDropzone
         endpoint="driveUploader"
+        onBeforeUploadBegin={() =>
+          allFilesRef.current.map((fileObj) => fileObj.file)
+        }
+        onUploadBegin={(fileName) => {
+          const batchId = currentBatchIdRef.current;
+          if (!batchId || uploadProcessesRef.current.has(batchId)) return;
+
+          const uniqueToastId = nanoid();
+          const description =
+            filesToUpload.length > 1
+              ? `${filesToUpload.length} files`
+              : fileName;
+
+          let localResolve: (value: { name: string }) => void;
+          let localReject: (reason?: unknown) => void;
+          const uploadPromise = new Promise<{ name: string }>(
+            (resolve, reject) => {
+              localResolve = resolve;
+              localReject = reject;
+            },
+          );
+
+          uploadProcessesRef.current.set(batchId, {
+            id: uniqueToastId,
+            description,
+            resolve: localResolve!,
+            reject: localReject!,
+          });
+
+          setIsOpen(false);
+          toast.promise(uploadPromise, {
+            id: uniqueToastId,
+            loading: (
+              <LoadingToast
+                title="Uploading"
+                description={`Uploading ${description}`}
+                progress={0}
+              />
+            ),
+            success: (data: { name: string }) => ({
+              message: "Upload Complete",
+              description: `Uploaded ${data.name}`,
+            }),
+            error: "Failed to upload files",
+          });
+        }}
+        onUploadProgress={(progressValue) => {
+          uploadProcessesRef.current.forEach((process) => {
+            toast.loading(
+              <LoadingToast
+                title="Uploading"
+                description={`Uploading ${process.description}`}
+                progress={progressValue}
+              />,
+              { id: process.id },
+            );
+          });
+        }}
         onClientUploadComplete={() => {
-          if (uploadPromiseRef.current) {
-            uploadPromiseRef.current.resolve({
-              name: currentToastDescriptionRef.current,
-            });
-            uploadPromiseRef.current = null;
+          const batchId = currentBatchIdRef.current;
+          if (batchId) {
+            const process = uploadProcessesRef.current.get(batchId);
+            if (process) {
+              process.resolve({ name: process.description });
+              uploadProcessesRef.current.delete(batchId);
+            }
+            currentBatchIdRef.current = null;
           }
-          if (uploadToastIdRef.current) {
-            uploadToastIdRef.current = null;
-          }
-          // Clear files after upload completes
           setFilesToUpload([]);
           allFilesRef.current = [];
           navigate.refresh();
         }}
         onUploadError={(error) => {
           toast.error(`Upload failed: ${error.message}`);
-          if (uploadPromiseRef.current) {
-            uploadPromiseRef.current.reject(error);
-            uploadPromiseRef.current = null;
-          }
-          if (uploadToastIdRef.current) {
-            uploadToastIdRef.current = null;
-          }
-        }}
-        onBeforeUploadBegin={() => {
-          // Directly read the latest file list from the ref
-          console.log("Accumulated files:", allFilesRef.current);
-          // If a File[] is needed, you can further map the files.
-          // Here we directly return our formatted files array.
-          return allFilesRef.current.map((fileObj) => fileObj.file);
-        }}
-        onUploadBegin={(fileName) => {
-          if (!uploadToastIdRef.current) {
-            setIsOpen(false);
-            currentToastDescriptionRef.current =
-              filesToUpload.length > 1
-                ? `${filesToUpload.length} files`
-                : fileName;
-
-            let localResolve: (value: { name: string }) => void;
-            let localReject: (reason?: unknown) => void;
-            const uploadPromise = new Promise<{ name: string }>(
-              (resolve, reject) => {
-                localResolve = resolve;
-                localReject = reject;
-              },
-            );
-            uploadPromiseRef.current = {
-              resolve: localResolve!,
-              reject: localReject!,
-            };
-
-            toastCounterRef.current += 1;
-            const uniqueToastId = `upload-${toastCounterRef.current}`;
-
-            toast.promise(uploadPromise, {
-              id: uniqueToastId,
-              loading: (
-                <LoadingToast
-                  title="Uploading"
-                  description={`Uploading ${currentToastDescriptionRef.current}`}
-                  progress={0}
-                />
-              ),
-              success: (data: { name: string }) => ({
-                message: "Upload Complete",
-                description: `Successfully uploaded ${data.name}`,
-              }),
-              error: "Failed to upload files",
-            });
-            uploadToastIdRef.current = uniqueToastId;
-          }
-        }}
-        onUploadProgress={(progressValue) => {
-          if (uploadToastIdRef.current) {
-            toast.loading(
-              <LoadingToast
-                title="Uploading"
-                description={`Uploading ${currentToastDescriptionRef.current}`}
-                progress={progressValue}
-              />,
-              { id: uploadToastIdRef.current },
-            );
+          const batchId = currentBatchIdRef.current;
+          if (batchId) {
+            const process = uploadProcessesRef.current.get(batchId);
+            if (process) {
+              process.reject(error);
+              uploadProcessesRef.current.delete(batchId);
+            }
+            currentBatchIdRef.current = null;
           }
         }}
         input={{ folderId: currentFolderId }}
-        onChange={(acceptedFiles) => {
-          // Use the custom addFiles function to update both state and ref
-          addFiles(acceptedFiles);
-        }}
+        onChange={(acceptedFiles) => addFiles(acceptedFiles)}
         appearance={{
           button:
             "ut-ready:bg-red-500 ut-uploading:cursor-not-allowed bg-red-400 bg-none after:bg-red-500 ut-uploading:pointer-events-none focus:outline-none focus:ring-0 focus:ring-offset-0",
@@ -182,7 +164,17 @@ export function FileUploadDropzone({
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={(event) => removeFile(event, file.name)}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setFilesToUpload((prev) => {
+                          const updated = prev.filter(
+                            (f) => f.name !== file.name,
+                          );
+                          allFilesRef.current = updated;
+                          return updated;
+                        });
+                      }}
                       className="p-1 hover:bg-transparent hover:text-primary"
                     >
                       <X size={16} />
@@ -204,7 +196,6 @@ export function FileUploadDropzone({
               return `Upload ${filesToUpload.length} file${
                 filesToUpload.length > 1 ? "s" : ""
               }`;
-
             return "Choose File(s)";
           },
         }}
