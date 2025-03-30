@@ -32,7 +32,7 @@
 - [x] Convert file sizes into a readable format
 - [x] Redesign the theme
 - [x] Prettify the upload toast
-- [x] Enhancing the responsiveness of the call-to-action button
+- [x] Enhance the responsiveness of the call-to-action button by using useFormStatus with a server action
 - [ ] Implement all authentication stuff, including the per-user upload limit
 
 ## Fun follow ups
