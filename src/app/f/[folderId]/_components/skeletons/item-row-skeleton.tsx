@@ -1,5 +1,3 @@
-"use client";
-
 export function ItemRowSkeleton() {
   return (
     <li className="border-t border-border px-6 py-4">

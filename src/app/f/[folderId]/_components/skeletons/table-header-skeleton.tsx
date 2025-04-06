@@ -1,5 +1,3 @@
-"use client";
-
 export function TableHeaderSkeleton() {
   return (
     <div className="grid grid-cols-12 gap-4 text-sm font-medium">
