@@ -33,11 +33,10 @@
 - [x] Redesign the theme
 - [x] Prettify the upload toast
 - [x] Enhance the responsiveness of the call-to-action button by using useFormStatus with a server action
+- [] Add infinite scroll
 - [ ] Implement all authentication stuff, including the per-user upload limit
 
 ## Fun follow ups
-
-### Add infinite scroll
 
 ### Refactor the async code using the tryCatch utility function
 

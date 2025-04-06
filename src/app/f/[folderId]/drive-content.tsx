@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronRight } from "lucide-react";
 import { ItemRow } from "./_components/item-row";
 import type { files_table, folders_table } from "@/server/db/schema";
